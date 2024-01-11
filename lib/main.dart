@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/view/home.dart';
+import 'package:weather_app/view/welcome.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: false,
       ),
-      home: const HomePageView(),
+      home: const WelcomeView(),
     );
   }
 }
