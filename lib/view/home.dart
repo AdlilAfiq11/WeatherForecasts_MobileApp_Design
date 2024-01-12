@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:one_clock/one_clock.dart';
 import 'package:timezone/standalone.dart' as tz;
+import 'package:weather_app/view/details/details.dart';
+import 'package:weather_app/view/search.dart';
+import 'package:weather_app/view/weather.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -10,21 +12,32 @@ class HomePageView extends StatefulWidget {
   State<HomePageView> createState() => _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<HomePageView>
+    with TickerProviderStateMixin {
   late tz.Location locationName;
   late tz.TZDateTime locTime;
-  int _currentIndex = 0;
+  late final TabController _tabController;
+  int _currentIndex = 1;
   bool isDay = true;
-
-  // final tabs = const [
-  //   Center(child: Text('Favorite Page')),
-  //   Center(child: Text('Search Page')),
-  // ];
 
   @override
   void initState() {
     super.initState();
     chooseDateTime(isDay);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController.addListener(_handleTabSelection);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _handleTabSelection() {
+    setState(() {
+      _currentIndex = _tabController.index;
+    });
   }
 
   Future<DateTime> chooseDateTime(bool isDay) async {
@@ -40,81 +53,13 @@ class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Colors.blue.shade900,
-              Colors.purple.shade600,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-                child: Image.asset(
-                  "assets/images/weatherIcon.png",
-                  scale: 3.0,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: Text(
-                  '28°C',
-                  style: TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: Text(
-                  'Precipitations',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Max: 24°',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Max: 18°',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                child: Image.asset(
-                  "assets/images/house.png",
-                  scale: 2.6,
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const <Widget>[
+          WeatherLocationView(),
+          WeatherPageView(),
+          WeatherDetailsView(),
+        ],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -142,22 +87,30 @@ class _HomePageViewState extends State<HomePageView> {
             padding: const EdgeInsets.all(20),
             tabs: [
               GButton(
-                  icon: Icons.location_on_outlined,
-                  text: 'Weather',
-                  onPressed: () => showDetails()),
-              const GButton(
+                icon: Icons.location_on_outlined,
+                text: 'Search',
+                onPressed: () {
+                  _tabController.animateTo(1);
+                },
+              ),
+              GButton(
                 icon: Icons.home,
                 text: 'Home',
-                // onPressed: () => favorite(context),
+                onPressed: () {
+                  _tabController.animateTo(1);
+                },
               ),
-              const GButton(
+              GButton(
                 icon: Icons.notes,
                 text: 'Details',
-                // onPressed: () => search(context),
+                onPressed: () {
+                  _tabController.animateTo(2);
+                },
               ),
             ],
             onTabChange: (index) {
               setState(() {
+                _tabController.animateTo(index);
                 _currentIndex = index;
               });
             },
@@ -166,189 +119,4 @@ class _HomePageViewState extends State<HomePageView> {
       ),
     );
   }
-
-  showDetails() => showModalBottomSheet(
-      backgroundColor: Colors.blue.shade900,
-      showDragHandle: true,
-      elevation: 3.0,
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-      builder: (context) {
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue.shade900,
-                Colors.purple.shade600,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          height: 350,
-          child: const Column(
-            children: <Widget>[
-              ListTile(
-                leading: Text('Today',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    )),
-                trailing: Text('February, 10',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    )),
-              ),
-              Divider(
-                thickness: 2.0,
-                indent: 20.0,
-                endIndent: 20.0,
-                height: 0.1,
-                color: Colors.white24,
-              ),
-              ListTile(
-                title: Text('Weather Forecasts',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    )),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-                        child: Text(
-                          '28°C',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Image(
-                        image: AssetImage("assets/images/weatherIcon.png"),
-                        width: 70,
-                        height: 70,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(
-                          '15.00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-                        child: Text(
-                          '28°C',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Image(
-                        image: AssetImage("assets/images/weatherIcon.png"),
-                        width: 70,
-                        height: 70,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(
-                          '16.00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-                        child: Text(
-                          '28°C',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Image(
-                        image: AssetImage("assets/images/weatherIcon.png"),
-                        width: 70,
-                        height: 70,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(
-                          '17.00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-                        child: Text(
-                          '28°C',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Image(
-                        image: AssetImage("assets/images/weatherIcon.png"),
-                        width: 70,
-                        height: 70,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(
-                          '18.00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListTile(
-                title: Text(
-                    '*Disclaimer: The weather forecasts is just a prediction, not totally accurate.',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.white,
-                    )),
-              ),
-            ],
-          ),
-        );
-      });
 }
