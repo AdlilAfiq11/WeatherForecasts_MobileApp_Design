@@ -56,7 +56,7 @@ class _HomePageViewState extends State<HomePageView> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
                 child: Image.asset(
                   "assets/images/weatherIcon.png",
                   scale: 3.0,
@@ -79,46 +79,37 @@ class _HomePageViewState extends State<HomePageView> {
                   'Precipitations',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                child: DigitalClock(
-                  showSeconds: false,
-                  isLive: false,
-                  digitalClockTextColor: Colors.black,
-                  decoration: const BoxDecoration(
-                      color: Colors.yellow,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  datetime: locTime,
-                ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Max: 24°',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Max: 18°',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: AnalogClock(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2.0,
-                        color: Colors.black,
-                      ),
-                      color: Colors.black,
-                      shape: BoxShape.circle),
-                  width: 200.0,
-                  height: 200.0,
-                  isLive: true,
-                  hourHandColor: Colors.red,
-                  minuteHandColor: Colors.white,
-                  showSecondHand: false,
-                  numberColor: Colors.white,
-                  showNumbers: true,
-                  textScaleFactor: 1.4,
-                  showTicks: true,
-                  showDigitalClock: true,
-                  datetime: locTime,
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Image.asset(
+                  "assets/images/house.png",
+                  scale: 2.6,
                 ),
               ),
             ],

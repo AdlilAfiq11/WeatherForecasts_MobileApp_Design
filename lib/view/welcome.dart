@@ -28,7 +28,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 90, 0, 0),
                 child: Image.asset(
                   "assets/images/weatherIcon.png",
                   scale: 1.7,
@@ -65,15 +65,19 @@ class _WelcomeViewState extends State<WelcomeView> {
                             builder: (context) => const HomePageView()));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
+                    backgroundColor: Colors.amber.shade600,
                     fixedSize: const Size(200, 60),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: const Text(
-                    'Get Started',
-                    style: TextStyle(fontSize: 20),
+                  child: Text(
+                    'Get Start',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.purple.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
