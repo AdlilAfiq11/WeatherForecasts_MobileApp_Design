@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:weather_app/view/details/details.dart';
 import 'package:weather_app/view/search.dart';
+import 'package:weather_app/view/utils/main_utils.dart';
 import 'package:weather_app/view/weather.dart';
 
 class HomePageView extends StatefulWidget {
@@ -62,16 +63,7 @@ class _HomePageViewState extends State<HomePageView>
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.purple.shade900,
-              Colors.purple.shade800,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        decoration: backgroundColor('bottomNavigationBar'),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 15,

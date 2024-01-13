@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/view/utils/main_utils.dart';
 
 class WeatherPageView extends StatefulWidget {
   const WeatherPageView({super.key});
@@ -11,17 +12,7 @@ class _WeatherPageViewState extends State<WeatherPageView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black,
-            Colors.blue.shade900,
-            Colors.purple.shade600,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      decoration: backgroundColor('main'),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,16 +92,7 @@ class _WeatherPageViewState extends State<WeatherPageView> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue.shade900,
-                Colors.purple.shade600,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+          decoration: backgroundColor('showModalBottomSheet'),
           height: 350,
           child: const Column(
             children: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/view/utils/main_utils.dart';
 
 class WeatherDetailsView extends StatefulWidget {
   const WeatherDetailsView({super.key});
@@ -11,17 +12,7 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black,
-            Colors.blue.shade900,
-            Colors.purple.shade600,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      decoration: backgroundColor('main'),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -138,21 +129,7 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
                         Container(
                           width: 70,
                           height: 150,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.2,
-                              color: Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.purple.shade400,
-                                Colors.purple.shade900,
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
+                          decoration: backgroundColor('daysForecasts'),
                           child: const Column(
                             children: [
                               Padding(
@@ -293,21 +270,7 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
               child: Container(
                 width: 345,
                 height: 125,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 0.2,
-                    color: Colors.white,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.purple.shade600,
-                      Colors.purple.shade900,
-                    ],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                  ),
-                ),
+                decoration: backgroundColor('airQuality'),
                 child: const Column(
                   children: [
                     Text('AIR QUALITY'),
@@ -325,22 +288,8 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
                   child: Container(
                     width: 160,
                     height: 130,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 0.2,
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.purple.shade700,
-                          Colors.purple.shade900,
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
-                    ),
-                    child: const Text('data'),
+                    decoration: backgroundColor('weatherDetails'),
+                    child: const Center(child: Text('data')),
                   ),
                 ),
                 Padding(
@@ -348,22 +297,8 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
                   child: Container(
                     width: 160,
                     height: 130,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 0.2,
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.purple.shade700,
-                          Colors.purple.shade900,
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
-                    ),
-                    child: const Text('data'),
+                    decoration: backgroundColor('weatherDetails'),
+                    child: const Center(child: Text('data')),
                   ),
                 )
               ],
