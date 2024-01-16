@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/view/home.dart';
+import 'package:weather_app/view/utils/main_utils.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -13,17 +14,7 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Colors.blue.shade900,
-              Colors.purple.shade600,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        decoration: backgroundColor('main'),
         child: Center(
           child: Column(
             children: [
@@ -71,11 +62,11 @@ class _WelcomeViewState extends State<WelcomeView> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Get Start',
                     style: TextStyle(
                       fontSize: 22,
-                      color: Colors.purple.shade900,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
