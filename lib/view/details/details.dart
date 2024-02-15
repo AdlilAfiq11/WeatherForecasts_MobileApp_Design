@@ -163,19 +163,56 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
             Container(
               decoration: backgroundColor('weatherDetails'),
               padding: const EdgeInsets.all(8),
-              child: const Center(
-                child: Center(
-                  child: Text("Info Here"),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Image.asset(
+                    "assets/images/cloudy.png",
+                    scale: 9.5,
+                  ),
+                  const Text(
+                    'Cloudiness',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Text(
+                    "20%",
+                    style: TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
               decoration: backgroundColor('weatherDetails'),
               padding: const EdgeInsets.all(8),
-              child: const Center(
-                child: Center(
-                  child: Text("Info Here"),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Image.asset(
+                    "assets/images/pressure.png",
+                    scale: 9.5,
+                    color: Colors.white,
+                  ),
+                  const Text(
+                    'Pressure',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Text(
+                    "20.0",
+                    style: TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
