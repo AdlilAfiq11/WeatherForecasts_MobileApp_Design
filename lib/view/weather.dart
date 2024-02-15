@@ -1,16 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:weather/weather.dart';
 import 'package:weather_app/view/utils/main_utils.dart';
 
 class WeatherPageView extends StatefulWidget {
-  const WeatherPageView({super.key});
+  const WeatherPageView({super.key, required this.weather});
 
+  final Weather weather;
   @override
   State<WeatherPageView> createState() => _WeatherPageViewState();
 }
 
 class _WeatherPageViewState extends State<WeatherPageView> {
+  final now = DateTime.now();
+  String current = '';
+  String min = '';
+  String max = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getTemperature();
+  }
+
+  void getTemperature() {
+    String? stringTemp = widget.weather.temperature.toString();
+    String? stringTempMin = widget.weather.tempMax.toString();
+    String? stringTempMax = widget.weather.tempMin.toString();
+
+    String temp = stringTemp.substring(0, stringTemp.indexOf(' '));
+    String minTemp = stringTempMin.substring(0, stringTempMin.indexOf(' '));
+    String maxTemp = stringTempMax.substring(0, stringTempMax.indexOf(' '));
+
+    setState(() {
+      current = temp;
+      min = minTemp;
+      max = maxTemp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat.yMMMMd('en_US').format(now);
+
     return Container(
       decoration: backgroundColor('main'),
       child: Center(
@@ -21,11 +53,11 @@ class _WeatherPageViewState extends State<WeatherPageView> {
               "assets/images/weatherIcon.png",
               scale: 3.0,
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text(
-                '28°C',
-                style: TextStyle(
+                '$current°',
+                style: const TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -42,24 +74,24 @@ class _WeatherPageViewState extends State<WeatherPageView> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Max: 24°',
-                    style: TextStyle(
+                    'Min: $min°',
+                    style: const TextStyle(
                       fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Text(
-                    'Max: 18°',
-                    style: TextStyle(
+                    'Max: $max°',
+                    style: const TextStyle(
                       fontSize: 18,
                       color: Colors.white,
                     ),
@@ -70,7 +102,7 @@ class _WeatherPageViewState extends State<WeatherPageView> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 40, 0, 30),
               child: GestureDetector(
-                onTap: () => showTodayWeather(),
+                onTap: () => showTodayWeather(formattedDate),
                 child: Image.asset(
                   "assets/images/house.png",
                   scale: 2.6,
@@ -83,8 +115,8 @@ class _WeatherPageViewState extends State<WeatherPageView> {
     );
   }
 
-  showTodayWeather() => showModalBottomSheet(
-      backgroundColor: Colors.blue.shade900,
+  showTodayWeather(formattedDate) => showModalBottomSheet(
+      backgroundColor: Colors.blue.shade500,
       showDragHandle: true,
       elevation: 3.0,
       context: context,
@@ -94,35 +126,35 @@ class _WeatherPageViewState extends State<WeatherPageView> {
         return Container(
           decoration: backgroundColor('showModalBottomSheet'),
           height: 350,
-          child: const Column(
+          child: Column(
             children: <Widget>[
               ListTile(
-                leading: Text('Today',
+                leading: const Text('Today',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     )),
-                trailing: Text('February, 10',
-                    style: TextStyle(
+                trailing: Text('$formattedDate',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     )),
               ),
-              Divider(
+              const Divider(
                 thickness: 2.0,
                 indent: 20.0,
                 endIndent: 20.0,
                 height: 0.1,
                 color: Colors.white24,
               ),
-              ListTile(
+              const ListTile(
                 title: Text('Weather Forecasts',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     )),
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Column(
@@ -243,10 +275,10 @@ class _WeatherPageViewState extends State<WeatherPageView> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              ListTile(
+              const ListTile(
                 title: Text(
                     '*Disclaimer: The weather forecasts is just a prediction, not totally accurate.',
                     style: TextStyle(
