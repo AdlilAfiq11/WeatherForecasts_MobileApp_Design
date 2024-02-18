@@ -6,8 +6,8 @@ BoxDecoration backgroundColor(String backgroundType) {
       return BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.purple.shade900,
-            Colors.purple.shade800,
+            Colors.blue.shade700,
+            Colors.blue.shade800,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -17,8 +17,8 @@ BoxDecoration backgroundColor(String backgroundType) {
       return BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.blue.shade900,
-            Colors.purple.shade600,
+            Colors.blue.shade500,
+            Colors.blue.shade600,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -65,8 +65,8 @@ BoxDecoration backgroundColor(String backgroundType) {
         borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
           colors: [
-            Colors.purple.shade700,
-            Colors.purple.shade900,
+            Colors.blue.shade600,
+            Colors.blue.shade300,
           ],
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
@@ -77,9 +77,9 @@ BoxDecoration backgroundColor(String backgroundType) {
       return BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.black,
-            Colors.blue.shade900,
-            Colors.purple.shade600,
+            Colors.blue.shade200,
+            Colors.blue.shade400,
+            Colors.blue.shade700,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

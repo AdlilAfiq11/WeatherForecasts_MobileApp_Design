@@ -5,6 +5,7 @@ import 'package:weather_app/view/details/details.dart';
 import 'package:weather_app/view/search.dart';
 import 'package:weather_app/view/utils/main_utils.dart';
 import 'package:weather_app/view/weather.dart';
+import 'package:weather/weather.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -15,6 +16,9 @@ class HomePageView extends StatefulWidget {
 
 class _HomePageViewState extends State<HomePageView>
     with TickerProviderStateMixin {
+  final String _apiKey = '7d26ce29a1c9b03677b7a999b0634902';
+  late WeatherFactory wf;
+  late Weather currentWeather;
   late tz.Location locationName;
   late tz.TZDateTime locTime;
   late final TabController _tabController;
@@ -25,6 +29,8 @@ class _HomePageViewState extends State<HomePageView>
   void initState() {
     super.initState();
     chooseDateTime(isDay);
+    wf = WeatherFactory(_apiKey);
+    queryWeather();
     _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
     _tabController.addListener(_handleTabSelection);
   }
@@ -33,6 +39,17 @@ class _HomePageViewState extends State<HomePageView>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> queryWeather() async {
+    try {
+      Weather weather = await wf.currentWeatherByCityName('Selangor');
+      setState(() {
+        currentWeather = weather;
+      });
+    } catch (error) {
+      print('Error fecting weather data: $error');
+    }
   }
 
   void _handleTabSelection() {
@@ -56,10 +73,10 @@ class _HomePageViewState extends State<HomePageView>
     return Scaffold(
       body: TabBarView(
         controller: _tabController,
-        children: const <Widget>[
-          WeatherLocationView(),
-          WeatherPageView(),
-          WeatherDetailsView(),
+        children: <Widget>[
+          const WeatherLocationView(),
+          WeatherPageView(weather: currentWeather),
+          const WeatherDetailsView(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -73,14 +90,14 @@ class _HomePageViewState extends State<HomePageView>
             curve: Curves.easeInCubic,
             color: Colors.white,
             activeColor: Colors.white,
-            tabBackgroundColor: Colors.purple.shade700,
+            tabBackgroundColor: Colors.white24,
             gap: 5,
             selectedIndex: _currentIndex,
             padding: const EdgeInsets.all(20),
             tabs: [
               GButton(
-                icon: Icons.location_on_outlined,
-                text: 'Search',
+                icon: Icons.newspaper,
+                text: 'News',
                 onPressed: () {
                   _tabController.animateTo(1);
                 },
